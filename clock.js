@@ -28,15 +28,15 @@ function clock (r)
 	var milliX = Math.sin(toRadians(angleMI)) * lengthMI + radius;
 	var milliY = Math.cos(toRadians(angleMI)) * lengthMI + radius;
 	milliY = radius - (milliY - radius);
-	var angleS = seconds * (360/60);
+	var angleS = seconds * (360/60) + (milli * (6/1000));
 	var secondX = Math.sin(toRadians(angleS)) * lengthS + radius;
 	var secondY = Math.cos(toRadians(angleS)) * lengthS + radius;
 	secondY = radius - (secondY - radius);
-	var angleM = minutes * (360/60);								//Winkel des Minutenzeigers
+	var angleM = minutes * (360/60) + (seconds * (6/60)) + (milli * ((6/60)/1000));								//Winkel des Minutenzeigers
 	var minuteX = Math.sin(toRadians(angleM)) * lengthM + radius;	//X-Koordinate anhand des Winkels zur gedachten Y-Achse (o(50/50))
 	var minuteY = Math.cos(toRadians(angleM)) * lengthM + radius;  	//Y-Koordinate anhand des Winkels zur gedachten Y-Achse (o(50/50))
 	minuteY = radius - (minuteY - radius); 							//Spiegeln, da Y-Achse von oben nach unten geht
-	var angleH = (hours * (360/12)) + (minutes * (30/60));
+	var angleH = (hours * (360/12)) + (minutes * (30/60)) + (seconds * ((30/60)/60)) + (milli * (((30/60)/60)/1000));
 	var hourX = Math.sin(toRadians(angleH)) * lengthH + radius;		//X-Koordinate anhand des Winkels zur gedachten Y-Achse (o(50/50))
 	var hourY = Math.cos(toRadians(angleH)) * lengthH + radius;  	//Y-Koordinate anhand des Winkels zur gedachten Y-Achse (o(50/50)
 	hourY = radius - (hourY - radius);
@@ -69,6 +69,9 @@ function clock (r)
 	ctx.moveTo(radius, radius);
 	ctx.lineTo(minuteX, minuteY);
 	ctx.stroke();
+	ctx.moveTo(radius, radius);
+	ctx.lineTo(milliX, milliY);
+	ctx.stroke();
 	ctx.closePath();
 	ctx.beginPath();
 	ctx.lineWidth = 1;
@@ -77,12 +80,6 @@ function clock (r)
 	ctx.lineTo(secondX, secondY);
 	ctx.stroke();
 	ctx.closePath();
-	ctx.beginPath();
-	ctx.strokeStyle = "#000000";
-	ctx.moveTo(radius, radius);
-	ctx.lineTo(milliX, milliY);
-	ctx.closePath(),
-	ctx.stroke();
 }
 
 function resize()
