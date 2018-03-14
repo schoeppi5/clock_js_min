@@ -80,6 +80,16 @@ function clock (r)
 	ctx.lineTo(secondX, secondY);
 	ctx.stroke();
 	ctx.closePath();
+	
+	//Zeichne "Punkt" in der Mitte des Ziffernblattes
+	
+	ctx.beginPath();
+	ctx.arc(radius, radius, radius / 20, 0, 2*Math.PI);
+	ctx.fillStyle = "black";
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+	ctx.fill();
+	ctx.closePath();
 }
 
 function resize()
